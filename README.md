@@ -2,7 +2,7 @@
 
 Version 1.0 of this free corpus holds **5127** sentences, annotated with **16** classes, with a total of **26376** annotated entities. The corpus comes into two formats: BRAT and CONLLUP, stored in the `roner/` folder. The CONLLUP file is annotated with lemma, POSes and dependency parsing information with [NLP-Cube](https://github.com/adobe/NLP-Cube). For more deatils regarding the corpus please see its dedicated [corpus info file](ronec/README.md).
 
-#### CONLLUP version: [What is CONLLUP?](http://universaldependencies.org/ext-format.html)
+### CONLLUP version: [What is CONLLUP?](http://universaldependencies.org/ext-format.html)
 **Direct download of the text file(~14MB): [ronec.conllup](ronec/conllup/ronec.conllup)**
 
 Example of an annotated sentence (annotations are in the last column, in the PARSEME:MWE annotation format):
@@ -38,7 +38,7 @@ Example of an annotated sentence (annotations are in the last column, in the PAR
 26	.	.	PUNCT	PERIOD	_	6	punct	_	SpaceAfter=No	*
 </pre>
 
-#### BRAT version: [What is BRAT?](http://brat.nlplab.org/)
+### BRAT version: [What is BRAT?](http://brat.nlplab.org/)
 The BRAT format comes ready-to-use in the BRAT annotator. The corpus is pre-split into 20 sub-folders. Just clone this repo and copy the `ronec/brat/` contents into the BRAT annotator's `data/` folder.
 
 ## Helper scripts
