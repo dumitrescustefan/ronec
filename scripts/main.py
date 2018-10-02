@@ -19,6 +19,7 @@ print("\n\t 1. Read from BRAT folder into core format\n"+"_"*60)
 core_sentences = scripts.read_brat_folder_into_core_format(BRAT_FOLDER)
 print("Done, read {} sentences.".format(len(core_sentences)))
 
+
 # ############################################################################
 print("\n\t 2. Write from core format to BRAT format\n"+"_"*60)
 print("\t This function will write all the core.Sentence objects into root folder {}, where it will create {} sub-folders (named as incremental integers), each with and equal number of sentences. It needs the files from {} where the .conf files are located in order to be a valid BRAT folder. To import it in BRAT, simply copy the folder to the /data/ folder in your BRAT installation.".format(SCRATCH_FOLDER, 20, BRAT_TEMPLATES))
@@ -56,6 +57,21 @@ print(sentence)
 print("First sentence text: {}".format(sentence.sentence))
 print("First sentence annotations (list of core.Annotation objects): {}".format(sentence.annotations))
 print("Example of an Annotation: type={}, start_char={}, stop_char={}, text_from_sentence={}".format(sentence.annotations[0].type,sentence.annotations[0].start, sentence.annotations[0].stop, sentence.sentence[sentence.annotations[0].start:sentence.annotations[0].stop] ) )
+
+
+print("Here are some overall statistics of the corpus:")
+count = 0
+per_entity_dict = {}
+for sentence in core_sentences:
+    count += len(sentence.annotations)
+    for ann in sentence.annotations:
+        if ann.type not in per_entity_dict:
+            per_entity_dict[ann.type] = 0
+        per_entity_dict[ann.type] = per_entity_dict[ann.type] + 1
+print("\t In total, we have annotated {} entities. Here's a breakdown of per-entity counts:".format(count))
+for key, val in per_entity_dict.items():
+    print("\t\t {} \t: \t{}".format(key,val))
+
 
 # ############################################################################
 print("\n\t 8. Example of the CONLLUP format:\n"+"_"*60)
