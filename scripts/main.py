@@ -1,135 +1,94 @@
-"""
-Example file
-"""
+# -*- coding: utf-8 -*-
 
 import sys, os, copy
+from convertors import scripts
 from convertors.core import *
-import convertors.brat as brat
 import convertors.conllup as conllup
 
 
-print("Example 1: BRAT format")
-print("_"*40+"\n")
+DATA_FOLDER = os.path.abspath(os.path.join("..","ronerc"))
+BRAT_FOLDER = os.path.join(DATA_FOLDER,"brat","ronerc")
+BRAT_TEMPLATES = os.path.join(DATA_FOLDER,"brat","template")
+CONLLUP_FILE = os.path.join(DATA_FOLDER,"conllup","ronerc.conllup")
+SCRATCH_FOLDER = os.path.abspath(os.path.join("..","temp"))
+SCRATCH_FOLDER_CONLLUP_FILE = os.path.abspath(os.path.join("..","temp","example.conllup"))
 
 
-sentences = brat.read_folder(os.path.join("data","brat"))
-print("\nRead {} sentences.".format(len(sentences)))
-print("First sentence is: \n\n{}".format(sentences[0]))    
+# ############################################################################
+print("\n\t 1. Read from BRAT folder into core format\n"+"_"*60)
+core_sentences = scripts.read_brat_folder_into_core_format(BRAT_FOLDER)
+print("Done, read {} sentences.".format(len(core_sentences)))
 
-# correct sentence
+# ############################################################################
+print("\n\t 2. Write from core format to BRAT format\n"+"_"*60)
+print("\t This function will write all the core.Sentence objects into root folder {}, where it will create {} sub-folders (named as incremental integers), each with and equal number of sentences. It needs the files from {} where the .conf files are located in order to be a valid BRAT folder. To import it in BRAT, simply copy the folder to the /data/ folder in your BRAT installation.".format(SCRATCH_FOLDER, 20, BRAT_TEMPLATES))
+scripts.write_brat_format_into_brat_folder(core_sentences, SCRATCH_FOLDER, split = 20, brat_template_conf_files = BRAT_TEMPLATES)
+
+
+# ############################################################################
+print("\n\t 3. Write from core format into CONLLUP file\n"+"_"*60)
+print("Warning, this can break if a BRAT sentence has multiple sentences in it (as they will be detected by NLP-Cube accordingly. The script below will concatenate these sentences into a single one. This will produce a valid CONLLUP file, even though it contradicts the one-sentence at a time 'contract' of the CONLLUP format. Please ensure that BRAT only contains single sentences, as the CONLLUP conversion process will be difficult later on. Here, we only convert 2 sentences for demo purposes.")
+scripts.write_core_format_into_conllup_file(core_sentences[0:2], SCRATCH_FOLDER_CONLLUP_FILE)
+
+
+# ############################################################################
+print("\n\t 4. Read from CONLLUP file into CONLLUP format\n"+"_"*60)
+conllup_dataset = scripts.read_conllup_file(CONLLUP_FILE)
+print("Done, read {} sentences.".format(len(conllup_dataset)))
+
+
+# ############################################################################
+print("\n\t 5. Write from CONLLUP format into CONLLUP file\n"+"_"*60)
+scripts.write_conllup_file(conllup_dataset,SCRATCH_FOLDER_CONLLUP_FILE)
+print("Done, written {} sentences.".format(len(conllup_dataset)))
+
+
+# ############################################################################
+print("\n\t 6. Read from CONLLUP file into core format\n"+"_"*60)
+core_sentences = scripts.read_conllup_file_into_core_format(CONLLUP_FILE)
+print("Done, read {} sentences.".format(len(core_sentences)))
+
+# ############################################################################
+print("\n\t 7. Example of the core format:\n"+"_"*60)
+sentence = core_sentences[0] # select first sentence
+print("First sentence is:")
+print(sentence)
+print("First sentence text: {}".format(sentence.sentence))
+print("First sentence annotations (list of core.Annotation objects): {}".format(sentence.annotations))
+print("Example of an Annotation: type={}, start_char={}, stop_char={}, text_from_sentence={}".format(sentence.annotations[0].type,sentence.annotations[0].start, sentence.annotations[0].stop, sentence.sentence[sentence.annotations[0].start:sentence.annotations[0].stop] ) )
+
+# ############################################################################
+print("\n\t 8. Example of the CONLLUP format:\n"+"_"*60)
+sentence = conllup_dataset[0]
+print("First CONLLUPSentence object is:")
+print(sentence)
+print("List of first tokens:")
+for i in range(min(10,len(sentence.tokens))):
+    token = sentence.tokens[i]
+    line = "{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}".format(
+            token.index,
+            token.word,
+            token.lemma,
+            token.upos,
+            token.xpos,
+            token.feats,
+            token.head,
+            token.deprel,
+            token.deps,
+            token.misc,
+            token.parseme_mwe)
+    print(line)
+
+    
+# ############################################################################
+print("\n\t 9. Example of sentence tokenization 'correction':\n"+"_"*60)
+
 from convertors.core import process_split_exceptions
-new_sentence = process_split_exceptions(sentences[0])
-print("Corrected sentence: \n\n{}".format(new_sentence))    
-
-#print("Writing into CONLLUP format ...")
-#conllup.write_file("temporary.conllup", sentences)
-
-exceptions = ['s', 's', 's', 's', 'm', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 'm', 'm', 's', 's', 's', 's', 's', 'm', 'm', 's', 's', 's', 'm', 's', 's', 'x', 'm', 's', 's', 'm', 's', 's', 's', 'm', 'm', 's', 's', 's', 's', 's', 's', 'm', 's', 's', 's', 'm', 'm', 'm', 'm', 'm', 's', 'm', 'm', 'm', 'm', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 'x', 's', 's', 'm', 's', 'm', 's', 's', 's', 's', 's', 'm', 's', 's', 's', 's', 's', 'm', 's', 's', 's', 'm', 's', 's', 'm', 's', 'm', 's', 'm', 's', 'x', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 'm', 'm', 's', 's', 's', 'm', 's', 's', 's', 's', 's', 's', 'm', 's', 's', 's', 'm', 's', 's', 's', 's', 's', 'm', 'm', 'x', 's', 's', 's', 's', 's', 's', 'm', 's', 's', 'm', 's', 's', 'm', 's', 's', 's', 's', 's', 's', 's', 'm', 'x', 's', 's', 'x', 's', 's', 's', 's', 's', 'm', 's', 's', 'm', 's', 'm', 'm', 'm', 's', 'm', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 'm', 'm', 's', 's', 'm', 's', 'm', 's', 'm', 's', 's', 'm', 'm', 'm', 's', 's', 's', 's', 's', 'm', 's', 's', 's', 's', 's', 's', 's', 'm', 's', 's', 's', 's', 's', 's', 'm', 's', 'm', 's', 'm', 's', 'x', 's', 's', 's', 's', 's', 's', 'm', 's', 's', 's', 's', 'm', 's', 's', 's', 'm', 'm', 's', 's', 's', 's', 's', 's', 's', 's', 'm', 's', 'm', 'm', 's', 's', 'm', 's', 's', 's', 'm', 'm', 's', 's', 'm', 's', 's', 'm', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 'm', 's', 's', 's', 's', 's', 's', 's', 'm', 's', 's', 'm', 's', 's', 's', 's', 's', 's', 'm', 's', 'm', 's', 's', 's', 's', 'm', 's', 's', 's', 'm', 'm', 's', 's', 's', 'm']
-
-from cube.api import Cube
-cube=Cube(verbose=True)
-cube.load("ro", tokenization=True, compound_word_expanding=False, tagging=True, lemmatization=True, parsing=True)
-cube_no_tok = Cube(verbose=True)
-cube_no_tok.load("ro", tokenization=False, compound_word_expanding=False, tagging=True, lemmatization=True, parsing=True)
-multi_sentence_count = 0
-errors = 0
-multi_sentences = []
-conllupdataset = []
-for sentence in sentences:
-    if "Alege: [" in sentence.sentence or "Decide tipul/clasa corecta: [" in sentence.sentence or len(sentence.sentence)==0:
-        continue
-    
-    #print("BEF split exc:")
-    #print(sentence)
-    sentence = process_split_exceptions(sentence)
-    #print("AFT split exc:")
-    #print(sentence)
-    
-    conllupsentence = conllup.process_sentence(sentence, cube)
-    if conllupsentence == None:
-        decision = exceptions[multi_sentence_count]
-        multi_sentence_count +=1
-        if decision == "s":
-            conllupsentence = conllup.process_sentence(sentence, cube, force_single = True, cube_object_no_tok = cube_no_tok)
-            if conllupsentence != None:
-                errors += 1
-                conllupdataset.append(conllupsentence)
-            #input("check")
-        if decision == "m":
-            # need to split annotations in several arrays
-            sequence_offset = 0            
-            sequences=cube(sentence.sentence)
-            copy_annotations = sorted(copy.deepcopy(sentence.annotations))
-            for sequence in sequences:
-                text = ""
-                for elem in sequence:
-                    text+=elem.word
-                    if not "SpaceAfter=No" in elem.space_after:
-                        text+=" "
-                annotations = []
-                i = 0
-                while i<len(copy_annotations):                                        
-                    print("\t\t current ann is: {}, len text = {}, offset = {}".format(copy_annotations[i], len(text), sequence_offset))
-                    if copy_annotations[i].stop <= sequence_offset+len(text):                        
-                        ann = copy.deepcopy(copy_annotations[i])
-                        ann.start = ann.start - sequence_offset
-                        ann.stop = ann.stop - sequence_offset
-                        print("\t\t\t Tranferred ann is : {}".format(ann))
-                        annotations.append(ann)
-                        copy_annotations.remove(copy_annotations[i])
-                        print("\t... copy_ann has len {}, ann has len {}".format(len(copy_annotations), len(annotations)))
-                        i=0
-                    else:
-                        i+=1
-                        
-                print("Copy_ann has len {}, ann has len {}".format(len(copy_annotations), len(annotations)))
-                
-                partial_sentence = Sentence(text.strip(), annotations)
-                print(partial_sentence)
-                partial_sentence = process_split_exceptions(partial_sentence)
-                sequence_offset += len(text)
-                
-                #print("PR: ["+partial_sentence.sentence+"]") 
-                conllupsentence = conllup.process_sentence(partial_sentence, cube)
-                if conllupsentence != None:
-                    errors += 1
-                    conllupdataset.append(conllupsentence)
-                #input("check")
-        """
-        multi_sentence_count +=1
-        
-        sequences = cube(sentence.sentence)
-        if ":" in sequences[0][-1].word:
-             multi_sentences.append("s")
-        else:            
-            print("______________________________________")
-            print("ORIGNIAL: ")
-            print("\n\033[44m"+sentence.sentence+"\033[0m")            
-            for sequence in sequences:
-                text = ""
-                for elem in sequence:
-                    text+=elem.word+" "
-                print("\t"+text.strip())
-            print()           
-            
-            decision = input("s - treat as single, m - treat as multi, x - discard: ")        
-            multi_sentences.append(decision)
-        #if len(multi_sentences)>2:
-        #    break
-        """
-    else:
-        conllupdataset.append(conllupsentence)   
-
-print(multi_sentences)        
-print("Total missed sentences : "+str(multi_sentence_count))        
-print("Total errors : "+str(errors))        
-#for sent in multi_sentences:
-#    print(sent+"\n")
-    
-conllup_file_handle = open("dataset.conllup","w")        
-for sentence_id, sentence in enumerate(conllupdataset):
-    sentence.id = sentence_id + 1
-    for line in sentence.to_text():    
-        conllup_file_handle.write(line)
-    conllup_file_handle.write("\n")
-conllup_file_handle.close()
+print("Issues arise when we import from BRAT (which has no knowledge of sentence segmentation or tokenization) into CONLLUP format .. which has. There is one notable exception that breaks the conversion from BRAT to CONNLU: tokens that belong to different entities that are separated by non-space characters. Example: 24-24 are two numbers separated by a hyphen. They do not tokenize well, meaning that instead of '24', '-', '24' (3 tokens), there is only one token '24-24' with two entities in them, making the conversion impossible. Therfore, apply the 'process_split_exceptions' function with core.Sentence parameter to introduce spaces between these entities and make possible the conversion.")
+print("For example let's consider the sentence: ")    
+# correct sentence
+old_sentence = Sentence(sentence="24-24 este scorul curent.", annotations=[Annotation(0,2,"NUMERIC_VALUE"), Annotation(3,5,"NUMERIC_VALUE")])
+print(old_sentence)
+print("Processing this sentence yields: (note the spaces introduced around the hyphen) ")
+new_sentence = process_split_exceptions(old_sentence)
+print(new_sentence)    
