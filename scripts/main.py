@@ -6,10 +6,10 @@ from convertors.core import *
 import convertors.conllup as conllup
 
 
-DATA_FOLDER = os.path.abspath(os.path.join("..","ronerc"))
-BRAT_FOLDER = os.path.join(DATA_FOLDER,"brat","ronerc")
+DATA_FOLDER = os.path.abspath(os.path.join("..","ronec"))
+BRAT_FOLDER = os.path.join(DATA_FOLDER,"brat","ronec")
 BRAT_TEMPLATES = os.path.join(DATA_FOLDER,"brat","template")
-CONLLUP_FILE = os.path.join(DATA_FOLDER,"conllup","ronerc.conllup")
+CONLLUP_FILE = os.path.join(DATA_FOLDER,"conllup","ronec.conllup")
 SCRATCH_FOLDER = os.path.abspath(os.path.join("..","temp"))
 SCRATCH_FOLDER_CONLLUP_FILE = os.path.abspath(os.path.join("..","temp","example.conllup"))
 
@@ -84,7 +84,7 @@ for i in range(min(10,len(sentence.tokens))):
 print("\n\t 9. Example of sentence tokenization 'correction':\n"+"_"*60)
 
 from convertors.core import process_split_exceptions
-print("Issues arise when we import from BRAT (which has no knowledge of sentence segmentation or tokenization) into CONLLUP format .. which has. There is one notable exception that breaks the conversion from BRAT to CONNLU: tokens that belong to different entities that are separated by non-space characters. Example: 24-24 are two numbers separated by a hyphen. They do not tokenize well, meaning that instead of '24', '-', '24' (3 tokens), there is only one token '24-24' with two entities in them, making the conversion impossible. Therfore, apply the 'process_split_exceptions' function with core.Sentence parameter to introduce spaces between these entities and make possible the conversion.")
+print("Issues arise when we import from BRAT (which has no knowledge of sentence segmentation or tokenization) into CONLLUP format .. which has. There is one notable exception that breaks the conversion from BRAT to CONNLU: tokens that belong to different entities that are separated by non-space characters. Example: 24-24 are two numbers separated by a hyphen. They do not tokenize well, meaning that instead of '24', '-', '24' (3 tokens), there is only one token '24-24' with two entities in them, making the conversion impossible. Therfore, apply the 'process_split_exceptions' function with core.Sentence parameter to introduce spaces between these entities and make possible the conversion. If this function fails with 'dtw' not found error, please install 'pip3 install dtw'.")
 print("For example let's consider the sentence: ")    
 # correct sentence
 old_sentence = Sentence(sentence="24-24 este scorul curent.", annotations=[Annotation(0,2,"NUMERIC_VALUE"), Annotation(3,5,"NUMERIC_VALUE")])
