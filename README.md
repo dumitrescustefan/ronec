@@ -2,12 +2,14 @@
 
 ## Corpus
 
-Version 1.0 of this free corpus holds **5127** sentences, annotated with **16** classes, with a total of **26377** annotated entities. The corpus comes into two formats: BRAT and CONLLUP, stored in the `roner/` folder. The CONLLUP file is annotated with lemma, POSes and dependency parsing information with [NLP-Cube](https://github.com/adobe/NLP-Cube). For more deatils regarding the corpus please see its dedicated [corpus info file](ronec/readme.md).
+Version 1.0 of this free corpus holds **5127** sentences, annotated with **16** classes, with a total of **26377** annotated entities. The corpus comes into two formats: BRAT and CONLLUP, stored in the `roner/` folder. The CONLLUP file is annotated with lemma, POSes and dependency parsing information with [NLP-Cube](https://github.com/adobe/NLP-Cube). For more deatils regarding the corpus please see its dedicated [corpus info file](ronec/README.md).
 
-##### CONLLUP version: [What is CONNLUP?](http://universaldependencies.org/ext-format.html)
-<span style="color:red">Direct download</span> of the text file(~14MB): [ronec.connlup](ronec/conllup/ronec.connlup)
+##### CONLLUP version: [What is CONLLUP?](http://universaldependencies.org/ext-format.html)
+**Direct download of the text file(~14MB): [ronec.conllup](ronec/conllup/ronec.conllup)**
 Example of an annotated sentence:
+
 ``Peste 200000 de pelerini au asistat, la Lourdes, la liturghia în aer liber oficiată de Suveranul Pontif cu ocazia praznicului Adormirii Maicii Domnului.``
+
 <pre>
 1	Peste	peste	ADP	Spsa	AdpType=Prep|Case=Acc	2	advmod	_	_	*
 2	200000	200000	NUM	Mc-p-d	Number=Plur|NumForm=Digit|NumType=Card	4	nummod	_	_	1:NUMERIC_VALUE
@@ -42,7 +44,7 @@ The BRAT format comes ready-to-use in the BRAT annotator. The corpus is pre-spli
 
 ## Helper scripts
 
-We also release a set of Python3 scripts in the `scripts/` folder. The `main.py` file contains one-liner functions that read, write and convert to/from BRAT/CONLLUP formats. More info regarding the scrips is found in [its Jupyter notebook](scripts/examples.jypnb).
+We also release a set of Python3 scripts in the `scripts/` folder. The `main.py` file contains one-liner functions that read, write and convert to/from BRAT/CONLLUP formats. More info regarding the scrips is found in [its Jupyter notebook](scripts/examples.ipynb).
 
 ## Authors
 + [Stefan Daniel Dumitrescu](https://www.linkedin.com/in/stefandumitrescu/)
