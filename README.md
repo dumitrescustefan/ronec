@@ -2,11 +2,12 @@
 
 ## Corpus
 
-Version 1.0 of this free corpus holds **5127** sentences, annotated with **16** classes, with a total of **26377** annotated entities. The corpus comes into two formats: BRAT and CONLLUP, stored in the `roner/` folder. The CONLLUP file is annotated with lemma, POSes and dependency parsing information with [NLP-Cube](https://github.com/adobe/NLP-Cube). For more deatils regarding the corpus please see its dedicated [corpus info file](ronec/README.md).
+Version 1.0 of this free corpus holds **5127** sentences, annotated with **16** classes, with a total of **26376** annotated entities. The corpus comes into two formats: BRAT and CONLLUP, stored in the `roner/` folder. The CONLLUP file is annotated with lemma, POSes and dependency parsing information with [NLP-Cube](https://github.com/adobe/NLP-Cube). For more deatils regarding the corpus please see its dedicated [corpus info file](ronec/README.md).
 
 ##### CONLLUP version: [What is CONLLUP?](http://universaldependencies.org/ext-format.html)
 **Direct download of the text file(~14MB): [ronec.conllup](ronec/conllup/ronec.conllup)**
-Example of an annotated sentence:
+
+Example of an annotated sentence (annotations are in the last column, in the PARSEME:MWE annotation format):
 
 ``Peste 200000 de pelerini au asistat, la Lourdes, la liturghia în aer liber oficiată de Suveranul Pontif cu ocazia praznicului Adormirii Maicii Domnului.``
 
