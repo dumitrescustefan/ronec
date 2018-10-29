@@ -1,6 +1,6 @@
 # RONEC - the Romanian Named Entity Corpus 
 
-Version 1.0 of this free corpus holds **5127** sentences, annotated with **16** classes, with a total of **26376** annotated entities. The corpus comes into two formats: BRAT and CONLLUP, stored in the `roner/` folder. The CONLLUP file is annotated with lemma, POSes and dependency parsing information with [NLP-Cube](https://github.com/adobe/NLP-Cube). For more deatils regarding the corpus please see its dedicated [corpus info file](ronec/README.md).
+Version 1.0 of this free corpus holds **5127** sentences, annotated with **16** classes, with a total of **26376** annotated entities. The corpus comes into two formats: BRAT and CONLLUP, stored in the `roner/` folder. The CONLLUP file is annotated with lemma, POSes and dependency parsing information with [NLP-Cube](https://github.com/adobe/NLP-Cube). For more details regarding the corpus please see its dedicated [info file](ronec/README.md).
 
 ### CONLLUP version: [What is CONLLUP?](http://universaldependencies.org/ext-format.html)
 **Direct download of the text file(~14MB): [ronec.conllup](ronec/conllup/ronec.conllup)**
