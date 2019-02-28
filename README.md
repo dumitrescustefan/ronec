@@ -52,5 +52,5 @@ We also release a set of Python3 scripts in the `scripts/` folder. The `main.py`
 + [Stefan Toma](https://www.linkedin.com/in/stefan-adrian-toma-00a6b770/)
 
 ## Credits
-A paper will be published in the following months. 
+A paper will be published in the following months. For the moment please link to this github page.
 
