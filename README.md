@@ -54,3 +54,6 @@ We also release a set of Python3 scripts in the `scripts/` folder. The `main.py`
 ## Credits
 A paper will be published in the following months. For the moment please link to this github page.
 
+## Resource ID
+[ISLRN Resource ID](http://www.islrn.org/resources/723-333-596-623-8/)
+
