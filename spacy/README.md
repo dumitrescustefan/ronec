@@ -32,4 +32,19 @@ For instance, run the following command:
 python3 -m spacy evaluate <model_path> <ronec_eval_path>
 ```
 
+And it gives us the following results on a trained default model:
+
+```
+Time      1.02 s
+Words     18171
+Words/s   17737
+TOK       100.00
+POS       0.00
+UAS       3.05
+LAS       0.00
+NER P     83.69
+NER R     80.62
+NER F     82.13
+```
+
 Additional information about Spacy's evaluation configuration can be found at https://spacy.io/api/cli#evaluate.
