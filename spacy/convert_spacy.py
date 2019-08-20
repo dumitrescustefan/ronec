@@ -35,7 +35,7 @@ def create_file_json_collubio(sentences, output_path, output_filename):
             file.write("\n")
 
     # convert the CoNLL-U BIO temporary file file to Spacy json CoNLL-U BIO
-    _ = subprocess.run("python -m spacy convert {} {} --converter conllu".
+    _ = subprocess.run("python -m spacy convert {} {} --converter conllubio".
                        format(output_filename, output_path))
 
     # clean up
@@ -85,9 +85,9 @@ def extract_sentences_from_file(ronec_path):
 
                 elif entity.__contains__(":"):
                     old_entity = entity.split(":")[-1]
-                    tokens[-1] = old_entity
+                    tokens[-1] = "I" + old_entity[1:]
                 else:
-                    tokens[-1] = old_entity
+                    tokens[-1] = "I" + old_entity[1:]
 
                 tokens_list.append(tokens)
 
