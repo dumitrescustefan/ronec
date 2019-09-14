@@ -4,35 +4,35 @@ This is a tutorial that shows how RONEC is integrated with [Spacy command line i
 
 ## Convert 
 
-Firstly, you need to convert the RONEC to [Spacy's JSON CoNLL-U BIO format](https://spacy.io/api/annotation#json-input) using the 
-`spacy_convert.py` script. It creates three files to train, validate and evalute the model. To run the script use the following command: 
+Firstly, you need to convert the RONEC CoNLL-UP to [Spacy's JSON CoNLL-U BIO format](https://spacy.io/api/annotation#json-input) using the
+`convert_spacy.py` script. It creates two files to train and validate the model. To run the script use the following command:
 
 ```
-python3 convert_spacy.py <ronec_path> <output_path>
+python3 convert_spacy.py <ronec_conllup_path> <output_path>
 ```
 
 ## Train
 
 To train a model, you must give as arguments the path to train and dev files created from running the previous convert script to 
-the Spacy's cli. Also, remember to specify `ner` to `-p` argument, to use only the named entity recognition functionality. For instance,
+the Spacy's cli. Also, remember to add the `-p ner` argument, to use only the named entity recognition functionality. For instance,
 run the following command:
 
 ```
-python3 -m spacy train ro <model_path> <ronec_train_path> <ronec_dev_path> -p ent
+python3 -m spacy train ro <model_path> <ronec_train_path> <ronec_dev_path> -p ner
 ```
 
 Additional information about Spacy's training configuration can be found at https://spacy.io/api/cli#train.
 
 ## Evaluate
 
-To evaluate the model, you must give as arguments the path to eval file created from the convert script and the path to the trained model.
+To evaluate the model, you must give as arguments the path to dev file created by the `convert_spacy.py` and the path to the trained model.
 For instance, run the following command:
 
 ``` 
 python3 -m spacy evaluate <model_path> <ronec_eval_path>
 ```
 
-And it gives us the following results on a trained default model:
+It gives the following results on the basic model (Note: to obtain better results, you need to tune the hyperparameters of the the model):
 
 ```
 Time      1.02 s

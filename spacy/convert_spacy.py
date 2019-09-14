@@ -23,6 +23,9 @@ def create_file_json_collubio(sentences, output_path, output_filename):
             output_filename (str): the output file name: train_ronec.json, dev_ronec.json or eval_ronec.json.
     """
 
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
     # write all the selected sentences to a temporary file in CoNLL-U BIO format
     with open(output_filename, "w", encoding="utf-8") as file:
         for sentence in sentences:
