@@ -56,7 +56,7 @@ Please consider citing the following [paper](https://arxiv.org/abs/1909.01247) a
 ```
 Dumitrescu, Stefan Daniel, and Andrei-Marius Avram. "Introducing RONEC--the Romanian Named Entity Corpus." arXiv preprint arXiv:1909.01247 (2019).
 ```
-or in .bib format:
+or in .bibtex format:
 ```
 @article{dumitrescu2019introducing,
   title={Introducing RONEC--the Romanian Named Entity Corpus},
