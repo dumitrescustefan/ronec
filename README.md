@@ -52,7 +52,19 @@ We also release a set of Python3 scripts in the `scripts/` folder. The `main.py`
 + [Stefan Toma](https://www.linkedin.com/in/stefan-adrian-toma-00a6b770/)
 
 ## Credits
-A paper will be published in the following months. For the moment please link to this github page.
+Please consider citing the following [paper](https://arxiv.org/abs/1909.01247) as a thank you to the authors of the RONEC: 
+```
+Dumitrescu, Stefan Daniel, and Andrei-Marius Avram. "Introducing RONEC--the Romanian Named Entity Corpus." arXiv preprint arXiv:1909.01247 (2019).
+```
+or in .bib format:
+```
+@article{dumitrescu2019introducing,
+  title={Introducing RONEC--the Romanian Named Entity Corpus},
+  author={Dumitrescu, Stefan Daniel and Avram, Andrei-Marius},
+  journal={arXiv preprint arXiv:1909.01247},
+  year={2019}
+}
+```
 
 ## Resource ID
 [ISLRN Resource ID](http://www.islrn.org/resources/723-333-596-623-8/)
