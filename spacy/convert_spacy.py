@@ -129,20 +129,25 @@ def extract_sentences_from_file(ronec_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("ronec_path")
-    parser.add_argument("output_path")
+    parser.add_argument("ronec_path", type=str)
+    parser.add_argument("output_path", type=str)
+    parser.add_argument("validation_ratio", type=float)
 
     args = parser.parse_args()
 
     ronec_path = args.ronec_path
     output_path = args.output_path
+    validation_ratio = args.validation_ratio
+
+    if validation_ratio < 0 or validation_ratio > 1:
+        raise argparse.ArgumentTypeError("Argument validation_ratio must be a float between 0 and 1.")
 
     # extract the sentences from RONEC
     sentences = extract_sentences_from_file(ronec_path)
 
     # create the train, dev and eval sentences
     num_sentences = 5127  # source: https://github.com/dumitrescustefan/ronec
-    num_train_sentences = int(0.9 * num_sentences)
+    num_train_sentences = int((1 - validation_ratio) * num_sentences)
     num_dev_sentences = num_sentences - num_train_sentences
 
     train_sentences = sentences[0: num_train_sentences]
@@ -150,8 +155,9 @@ if __name__ == "__main__":
 
     # create the train, dev and eval json files necessary for Spacy
     print("Running convert conllup to spacy json script...\n")
-    print("Total sentences: {}\nTrain sentences: {}\nDev sentences: {}".
-          format(num_sentences, num_train_sentences, num_dev_sentences))
+    print("Total sentences: {}...".format(num_sentences))
+    print("Validation ratio is {}, resulting in {} train sentences and {} dev sentences...\n".
+          format(validation_ratio, num_train_sentences, num_dev_sentences))
 
     create_file_json_collubio(train_sentences,
                               output_path, "train_ronec.json")
