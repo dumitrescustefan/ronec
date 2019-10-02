@@ -15,7 +15,7 @@ python3 convert_spacy.py [ronec_conllup_path] [output_path] [validation_ratio]
 | --- | --- | --- |
 | ronec_conllup_path | str | Path of the ronec CoNLL-U Plus file. |
 | output_path | str | Save path of the train and dev files in Spacy's JSON CoNLL-U BIO format. |
-| validation_ratio | float | Fraction of the training data to be used as validation data. |
+| --validation_ratio | float | Fraction of the training data to be used as validation data. Default: `0.1` |
 
 ## Train
 
