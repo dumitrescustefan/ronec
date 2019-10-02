@@ -47,7 +47,7 @@ We also release a set of Python3 scripts in the `scripts/` folder. The `main.py`
 
 ## Spacy Integration
 
-RONEC also supports Spacy integration. [This tutorial](https://github.com/dumitrescustefan/ronec/blob/master/spacy) shows how to train, load and run a model using RONEC.
+RONEC also supports Spacy integration. This [tutorial](https://github.com/dumitrescustefan/ronec/blob/master/spacy) shows how to train, load and run a model using RONEC.
 
 ## Authors
 + [Stefan Daniel Dumitrescu](https://www.linkedin.com/in/stefandumitrescu/)
