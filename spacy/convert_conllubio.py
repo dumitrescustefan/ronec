@@ -16,26 +16,6 @@ import sys
 import ntpath
 
 
-ent_dict = {
-    "-TETIME": "-DATETIME",
-    "-MERIC_VALUE": "-NUMERIC_VALUE",
-    "-RSON": "-PERSON",
-    "-GANIZATION": "-ORGANIZATION",
-    "-T_REL_POL": "-NAT_REL_POL",
-    "-E\"": "-GPE\"",
-    "-C\"": "-LOC\"",
-    "-CILITY": "-FACILITY",
-    "-ODUCT": "-PRODUCT",
-    "-ENT": "-EVENT",
-    "-NGUAGE": "-LANGUAGE",
-    "-RK_OF_ART": "-WORK_OF_ART",
-    "-RIOD": "-PERIOD",
-    "-NEY": "-MONEY",
-    "-ANTITY": "-QUANTITY",
-    "-DINAL": "-ORDINAL"
-}
-
-
 def create_file_json_collubio(sentences, output_path, output_filename):
     """
         This function creates a json file that contains CoNLL-U BIO information about RONEC.
@@ -50,7 +30,7 @@ def create_file_json_collubio(sentences, output_path, output_filename):
         os.makedirs(output_path)
 
     # write all the selected sentences to a temporary file in CoNLL-U BIO format
-    with open(output_filename, "w", encoding="utf-8") as file:
+    with open(os.path.join(output_path, output_filename), "w", encoding="utf-8") as file:
         for sentence in sentences:
             for tokens_list in sentence:
                 if type(tokens_list) == str:
@@ -59,22 +39,6 @@ def create_file_json_collubio(sentences, output_path, output_filename):
                     file.write("\t".join(tokens_list) + "\n")
 
             file.write("\n")
-
-    # convert the CoNLL-U BIO temporary file file to Spacy json CoNLL-U BIO
-    _ = subprocess.run("python -m spacy convert {} {} --converter conllubio".
-                       format(output_filename, output_path))
-
-    with open(os.path.join(output_path, ntpath.basename(output_filename)), "r", encoding="utf-8") as file:
-        text = file.read()
-
-        for wrong_ent, correct_ent in ent_dict.items():
-            text = re.sub(wrong_ent, correct_ent, text)
-
-    with open(os.path.join(output_path, ntpath.basename(output_filename)), "w") as file:
-        file.write(text)
-
-    # clean up
-    os.remove(output_filename)
 
 
 def extract_sentences_from_file(ronec_path):
@@ -120,9 +84,9 @@ def extract_sentences_from_file(ronec_path):
 
                 elif entity.__contains__(":"):
                     old_entity = entity.split(":")[-1]
-                    tokens[-1] = "I" + old_entity[1:]
+                    tokens[-1] = "I " + old_entity
                 else:
-                    tokens[-1] = "I" + old_entity[1:]
+                    tokens[-1] = "I " + old_entity
 
                 tokens_list.append(tokens)
 
@@ -157,16 +121,14 @@ if __name__ == "__main__":
     dev_sentences = sentences[num_train_sentences: num_train_sentences + num_dev_sentences]
 
     # create the train, dev and eval json files necessary for Spacy
-    print("Running convert conllup to spacy json script...\n")
+    print("Converting CoNLL-U Plus to CoNLL-U BIO...")
     print("Total sentences: {}...".format(num_sentences))
     print("Validation ratio is {}, resulting in {} train sentences and {} dev sentences...\n".
           format(dev_ratio, num_train_sentences, num_dev_sentences))
 
-    create_file_json_collubio(train_sentences,
-                              output_path, os.path.join(os.path.dirname(sys.argv[0]), "train_ronec.json"))
+    create_file_json_collubio(train_sentences, output_path, "train_ronec.conllubio")
 
-    create_file_json_collubio(dev_sentences,
-                              output_path, os.path.join(os.path.dirname(sys.argv[0]), "dev_ronec.json"))
+    create_file_json_collubio(dev_sentences, output_path, "dev_ronec.conllubio")
 
 
 
