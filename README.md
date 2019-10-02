@@ -47,7 +47,7 @@ We also release a set of Python3 scripts in the `scripts/` folder. The `main.py`
 
 ## Authors
 + [Stefan Daniel Dumitrescu](https://www.linkedin.com/in/stefandumitrescu/)
-+ [Andrei Avram](https://ro.linkedin.com/in/andrei-marius-avram-80698a169) 
++ [Andrei-Marius Avram](https://ro.linkedin.com/in/andrei-marius-avram-80698a169) 
 + [Luciana Morogan](https://www.linkedin.com/in/luciana-morogan-a7879568/)
 + [Stefan Toma](https://www.linkedin.com/in/stefan-adrian-toma-00a6b770/)
 
