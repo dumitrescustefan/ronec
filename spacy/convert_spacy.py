@@ -11,6 +11,26 @@ More information can be found at: https://spacy.io/api/cli#convert
 import argparse
 import subprocess
 import os
+import re
+
+ent_dict = {
+    "-TETIME": "-DATETIME",
+    "-MERIC_VALUE": "-NUMERIC_VALUE",
+    "-RSON": "-PERSON",
+    "-GANIZATION": "-ORGANIZATION",
+    "-T_REL_POL": "-NAT_REL_POL",
+    "-E\"": "-GPE\"",
+    "-C\"": "-LOC\"",
+    "-CILITY": "-FACILITY",
+    "-ODUCT": "-PRODUCT",
+    "-ENT": "-EVENT",
+    "-NGUAGE": "-LANGUAGE",
+    "-RK_OF_ART": "-WORK_OF_ART",
+    "-RIOD": "-PERIOD",
+    "-NEY": "-MONEY",
+    "-ANTITY": "-QUANTITY",
+    "-DINAL": "-ORDINAL"
+}
 
 
 def create_file_json_collubio(sentences, output_path, output_filename):
@@ -40,6 +60,15 @@ def create_file_json_collubio(sentences, output_path, output_filename):
     # convert the CoNLL-U BIO temporary file file to Spacy json CoNLL-U BIO
     _ = subprocess.run("python -m spacy convert {} {} --converter conllubio".
                        format(output_filename, output_path))
+
+    with open(os.path.join(output_path, output_filename), "r") as file:
+        text = file.read()
+
+        for wrong_ent, correct_ent in ent_dict.items():
+            text = re.sub(wrong_ent, correct_ent, text)
+
+    with open(os.path.join(output_path, output_filename), "w") as file:
+        file.write(text)
 
     # clean up
     os.remove(output_filename)
