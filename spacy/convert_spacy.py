@@ -12,6 +12,9 @@ import argparse
 import subprocess
 import os
 import re
+import sys
+import ntpath
+
 
 ent_dict = {
     "-TETIME": "-DATETIME",
@@ -61,13 +64,13 @@ def create_file_json_collubio(sentences, output_path, output_filename):
     _ = subprocess.run("python -m spacy convert {} {} --converter conllubio".
                        format(output_filename, output_path))
 
-    with open(os.path.join(output_path, output_filename), "r") as file:
+    with open(os.path.join(output_path, ntpath.basename(output_filename)), "r", encoding="utf-8") as file:
         text = file.read()
 
         for wrong_ent, correct_ent in ent_dict.items():
             text = re.sub(wrong_ent, correct_ent, text)
 
-    with open(os.path.join(output_path, output_filename), "w") as file:
+    with open(os.path.join(output_path, ntpath.basename(output_filename)), "w") as file:
         file.write(text)
 
     # clean up
@@ -160,10 +163,10 @@ if __name__ == "__main__":
           format(dev_ratio, num_train_sentences, num_dev_sentences))
 
     create_file_json_collubio(train_sentences,
-                              output_path, "train_ronec.json")
+                              output_path, os.path.join(os.path.dirname(sys.argv[0]), "train_ronec.json"))
 
     create_file_json_collubio(dev_sentences,
-                              output_path, "dev_ronec.json")
+                              output_path, os.path.join(os.path.dirname(sys.argv[0]), "dev_ronec.json"))
 
 
 
