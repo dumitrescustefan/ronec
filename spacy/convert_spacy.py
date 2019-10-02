@@ -61,7 +61,7 @@ def create_file_json_collubio(sentences, output_path, output_filename):
             file.write("\n")
 
     # convert the CoNLL-U BIO temporary file file to Spacy json CoNLL-U BIO
-    _ = subprocess.run("!python -m spacy convert {} {} --converter conllubio".
+    _ = subprocess.run("python -m spacy convert {} {} --converter conllubio".
                        format(output_filename, output_path))
 
     with open(os.path.join(output_path, ntpath.basename(output_filename)), "r", encoding="utf-8") as file:
