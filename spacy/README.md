@@ -5,16 +5,17 @@ This is a demo tutorial that shows how RONEC is integrated with [Spacy command l
 ## Convert 
 
 Firstly, you need to convert the RONEC CoNLL-UP to [Spacy's JSON CoNLL-U BIO format](https://spacy.io/api/annotation#json-input) using the
-`convert_spacy.py` script. It creates two files to train and validate the model (`dev_ronec.json` and `train_ronec.json`, respectievly) to the specified path.
+`convert_spacy.py` script. It creates two files to train and validate the model (`train_ronec.json` and `dev_ronec.json`, respectively) to the specified path.
 
 ```
-python3 convert_spacy.py [ronec_conllup_path] [output_path]
+python3 convert_spacy.py [ronec_conllup_path] [output_path] [validation_ratio]
 ```
 
 | Argument | Type | Description |
 | --- | --- | --- |
 | ronec_conllup_path | str | Path of the ronec CoNLL-U Plus file. |
 | output_path | str | Save path of the train and dev files in Spacy's JSON CoNLL-U BIO format. |
+| --dev_ratio | float | Fraction of the training data to be used as dev data. Default: `0.1` |
 
 ## Train
 
@@ -73,9 +74,16 @@ The following code shows how to load and run a trained model to extract named en
 ```
 import spacy
 
-nlp = spacy.load("model/model-best")
+nlp = spacy.load(<model_path>)
 doc = nlp("Popescu Ion a fost la Cluj")
 
 for ent in doc.ents:
 	print(ent.text, ent.start_char, ent.end_char, ent.label_)
+```
+
+Outputs:
+
+```
+Popescu Ion 0 11 PERSON
+Cluj 22 26 GPE
 ```
