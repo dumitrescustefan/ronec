@@ -65,3 +65,17 @@ NER F     82.13
 Note: To obtain better results, you need to tune the hyperparameters of the the model
 
 Additional information about Spacy's evaluation configuration can be found at https://spacy.io/api/cli#evaluate.
+
+## Spacy API
+
+The following code shows how to load and run a trained model to extract named entities from Romanian texts with the Spacy API.
+
+```
+import spacy
+
+nlp = spacy.load("model/model-best")
+doc = nlp("Popescu Ion a fost la Cluj")
+
+for ent in doc.ents:
+	print(ent.text, ent.start_char, ent.end_char, ent.label_)
+```
