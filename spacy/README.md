@@ -5,7 +5,7 @@ This is a demo tutorial that shows how RONEC is integrated with [Spacy command l
 ## Convert 
 
 Firstly, you need to convert the RONEC CoNLL-UP to [Spacy's JSON CoNLL-U BIO format](https://spacy.io/api/annotation#json-input) using the
-`convert_spacy.py` script. It creates two files to train and validate the model (`dev_ronec.json` and `train_ronec.json`, respectievly) to the specified path.
+`convert_spacy.py` script. It creates two files to train and validate the model (`train_ronec.json` and `dev_ronec.json`, respectievly) to the specified path.
 
 ```
 python3 convert_spacy.py [ronec_conllup_path] [output_path] [validation_ratio]
