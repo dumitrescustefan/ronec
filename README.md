@@ -45,9 +45,9 @@ The BRAT format comes ready-to-use in the BRAT annotator. The corpus is pre-spli
 
 We also release a set of Python3 scripts in the `scripts/` folder. The `main.py` file contains one-liner functions that read, write and convert to/from BRAT/CONLLUP formats. More info regarding the scrips is found in [its Jupyter notebook](scripts/examples.ipynb).
 
-## Spacy Integration
+## Spacy NER Integration
 
-RONEC also supports Spacy integration. This [tutorial](https://github.com/dumitrescustefan/ronec/blob/master/spacy) shows how to train, load and run a model using RONEC.
+Spacy is a well-known text processor, which includes a NER engine. This [tutorial](https://github.com/dumitrescustefan/ronec/blob/master/spacy) shows how to train a NER model based on RONEC, and perform entity recognition on arbitrary text (in Python).
 
 ## Authors
 + [Stefan Daniel Dumitrescu](https://www.linkedin.com/in/stefandumitrescu/)
