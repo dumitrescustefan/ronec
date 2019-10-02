@@ -131,7 +131,7 @@ if __name__ == "__main__":
 
     parser.add_argument("ronec_path", type=str)
     parser.add_argument("output_path", type=str)
-    parser.add_argument("validation_ratio", type=float)
+    parser.add_argument("--dev_ratio", type=float, default=0.1)
 
     args = parser.parse_args()
 
