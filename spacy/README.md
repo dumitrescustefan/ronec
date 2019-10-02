@@ -4,18 +4,30 @@ This is a demo tutorial that shows how RONEC is integrated with [Spacy command l
 
 ## Convert 
 
-Firstly, you need to convert the RONEC CoNLL-UP to [Spacy's JSON CoNLL-U BIO format](https://spacy.io/api/annotation#json-input) using the
-`convert_spacy.py` script. It creates two files to train and validate the model (`train_ronec.json` and `dev_ronec.json`, respectively) to the specified path.
+Firstly, you need to convert the RONEC CoNLL-UP in CoNLL-U BIO using the `convert_spacy.py` script. It creates two `.conllubio` files to train and validate the model (`train_ronec.conllubio` and `dev_ronec.conllubio`, respectively) to the specified path.
 
 ```
-python3 convert_spacy.py [ronec_conllup_path] [output_path] [validation_ratio]
+python3 convert_conllubio.py [ronec_conllup_path] [output_path] [validation_ratio]
 ```
 
 | Argument | Type | Description |
 | --- | --- | --- |
 | ronec_conllup_path | str | Path of the ronec CoNLL-U Plus file. |
-| output_path | str | Save path of the train and dev files in Spacy's JSON CoNLL-U BIO format. |
+| output_path | str | Save path of the train and dev files in CoNLL-U BIO format. |
 | --dev_ratio | float | Fraction of the training data to be used as dev data. Default: `0.1` |
+
+Then, you have to convert the resulted CoNLL-U BIO files in [Spacy's JSON CoNLL-U BIO format](https://spacy.io/api/annotation#json-input) using the Spacy `convert` cli. 
+
+```
+python -m spacy convert [ronec_conllubio_path] [output_path] --converter conllubio
+```
+
+| Argument | Type | Description |
+| --- | --- | --- |
+| ronec_conllubio_path | str | Path of the CoNLL-U BIO file resulted by running the `convert_conllubio.py` script. |
+| output_path | str | Save path of the file in Spacy's JSON CoNLL-U BIO format. |
+
+Additional information about Spacy's converting configuration can be found at https://spacy.io/api/cli#convert.
 
 ## Train
 
