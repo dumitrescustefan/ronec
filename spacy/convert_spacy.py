@@ -163,10 +163,10 @@ if __name__ == "__main__":
           format(dev_ratio, num_train_sentences, num_dev_sentences))
 
     create_file_json_collubio(train_sentences,
-                              output_path, os.path.join(os.path.dirname(sys.argv[0]), "train_ronec.json"))
+                              output_path, os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "train_ronec.json"))
 
     create_file_json_collubio(dev_sentences,
-                              output_path, os.path.join(os.path.dirname(sys.argv[0]), "dev_ronec.json"))
+                              output_path, os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "dev_ronec.json"))
 
 
 
