@@ -45,6 +45,10 @@ The BRAT format comes ready-to-use in the BRAT annotator. The corpus is pre-spli
 
 We also release a set of Python3 scripts in the `scripts/` folder. The `main.py` file contains one-liner functions that read, write and convert to/from BRAT/CONLLUP formats. More info regarding the scrips is found in [its Jupyter notebook](scripts/examples.ipynb).
 
+## Spacy Integration
+
+RONEC also supports Spacy model integration. More information can be found [here](https://github.com/dumitrescustefan/ronec/blob/master/spacy).
+
 ## Authors
 + [Stefan Daniel Dumitrescu](https://www.linkedin.com/in/stefandumitrescu/)
 + [Andrei-Marius Avram](https://ro.linkedin.com/in/andrei-marius-avram-80698a169) 
