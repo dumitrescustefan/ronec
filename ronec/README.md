@@ -1,4 +1,4 @@
-Details will be filled in
+## Entity Count
 
 Breakdown by entity type:
 
@@ -20,3 +20,7 @@ EVENT  |       425
 PERIOD         |       385
 WORK_OF_ART    |       248
 LANGUAGE       |       97
+
+## PERSON Proper Nouns
+
+RONEC contains a total of 1251 proper nouns for the class PERSON. The full list can be found [here](https://github.com/dumitrescustefan/ronec/blob/master/ronec/meta/person_proper_nouns.txt).
