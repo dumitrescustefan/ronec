@@ -49,7 +49,7 @@ We also release a set of Python3 scripts in the `scripts/` folder. The `main.py`
 
 ## Spacy NER Integration
 
-Spacy is a well-known text processor, which includes a NER engine. This [tutorial](https://github.com/dumitrescustefan/ronec/blob/master/spacy) shows how to train a NER model based on RONEC, and perform entity recognition on arbitrary text (in Python).
+Spacy is a well-known text processor, which includes a NER engine. This [tutorial](https://github.com/dumitrescustefan/ronec/blob/master/spacy) shows how to train a NER model based on RONEC, and perform entity recognition on arbitrary text (in Python). Right now, to [use RONEC in SpaCy](https://github.com/dumitrescustefan/ronec/tree/master/spacy#option-2-download-the-pre-trained-online-model-and-load-it-into-spacy-difficulty-easier), just download the pretrained model and load it locally. That's it.
 
 ## Authors
 + [Stefan Daniel Dumitrescu](https://www.linkedin.com/in/stefandumitrescu/)
