@@ -65,7 +65,6 @@ def extract_sentences_from_file(ronec_path):
             if line[0] == "#":
                 tokens_list = []
                 tokens_list.append(line)
-                tokens_list.append(file.readline())
             # if the current line denotes the end of the sentences, add the list of tokens to the sentence list
             elif line == "\n":
                 sentences.append(tokens_list)
@@ -75,6 +74,7 @@ def extract_sentences_from_file(ronec_path):
 
                 # remove the second last token to obtain the correct number of tokens for Spacy
                 del tokens[-2]
+                tokens[6] = "0"
 
                 # convert the entities to BIO format
                 entity = tokens[-1]
@@ -84,7 +84,7 @@ def extract_sentences_from_file(ronec_path):
 
                 elif entity.__contains__(":"):
                     old_entity = entity.split(":")[-1]
-                    tokens[-1] = "I " + old_entity
+                    tokens[-1] = "B " + old_entity
                 else:
                     tokens[-1] = "I " + old_entity
 
