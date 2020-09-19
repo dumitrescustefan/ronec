@@ -47,9 +47,22 @@ The BRAT format comes ready-to-use in the BRAT annotator. The corpus is pre-spli
 
 We also release a set of Python3 scripts in the `scripts/` folder. The `main.py` file contains one-liner functions that read, write and convert to/from BRAT/CONLLUP formats. More info regarding the scrips is found in [its Jupyter notebook](scripts/examples.ipynb).
 
-## Spacy NER Integration
+## SpaCy NER Integration
 
-Spacy is a well-known text processor, which includes a NER engine. This [tutorial](https://github.com/dumitrescustefan/ronec/blob/master/spacy) shows how to train a NER model based on RONEC, and perform entity recognition on arbitrary text (in Python). Right now, to [use RONEC in SpaCy](https://github.com/dumitrescustefan/ronec/tree/master/spacy#option-2-download-the-pre-trained-online-model-and-load-it-into-spacy-difficulty-easier), just download the pretrained model and load it locally. That's it.
+spaCy is a well-known text processor, which includes a NER engine. This [tutorial](https://github.com/dumitrescustefan/ronec/blob/master/spacy) shows how to train a NER model based on RONEC, and perform entity recognition on arbitrary text (in Python). Right now, to [use RONEC in SpaCy](https://github.com/dumitrescustefan/ronec/tree/master/spacy#option-2-download-the-pre-trained-online-model-and-load-it-into-spacy-difficulty-easier), just download the pretrained model and load it locally. That's it.
+
+__[UPDATE] RONEC is now integrated in [SpaCy 2.3](https://explosion.ai/blog/spacy-v2-3) natively__:
+```python
+python -m spacy download ro_core_news_sm
+ 
+import spacy
+nlp = spacy.load("ro_core_news_sm") # or _md or _lg models
+
+doc = nlp("Avionul zboară de la Cluj la Timișoara la ora 18.")
+
+for ent in doc.ents:
+    print(ent.text, ent.start_char, ent.end_char, ent.label_)
+```
 
 ## Authors
 + [Stefan Daniel Dumitrescu](https://www.linkedin.com/in/stefandumitrescu/)
@@ -57,7 +70,14 @@ Spacy is a well-known text processor, which includes a NER engine. This [tutoria
 + [Luciana Morogan](https://www.linkedin.com/in/luciana-morogan-a7879568/)
 + [Stefan Toma](https://www.linkedin.com/in/stefan-adrian-toma-00a6b770/)
 
-## Credits
+## Acknowledgement
+This work was supported by a grant of the Ministry of Education and Research, UEFISCDI, project number PN-III-P2-2.1-PED-2016-1799, within PNCDI III.
+The consortium component: Coordinator - MILITARY TECHNICAL ACADEMY "FERDINAND I" ( Project Manager: Dr. Luciana Morogan); Partner 1 - CERTSIGN SA (Responsible: Dr. Armand Ropot). Link to the project's website at [ppie.certsign.ro](https://ppie.certsign.ro/).
+
+## Resource ID
+[ISLRN Resource ID](http://www.islrn.org/resources/723-333-596-623-8/)
+
+## Cite
 Please consider citing the following [paper](https://arxiv.org/abs/1909.01247) as a thank you to the authors of the RONEC: 
 ```
 Dumitrescu, Stefan Daniel, and Andrei-Marius Avram. "Introducing RONEC--the Romanian Named Entity Corpus." arXiv preprint arXiv:1909.01247 (2019).
@@ -71,7 +91,3 @@ or in .bibtex format:
   year={2019}
 }
 ```
-
-## Resource ID
-[ISLRN Resource ID](http://www.islrn.org/resources/723-333-596-623-8/)
-
