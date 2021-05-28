@@ -4,7 +4,7 @@ from torch.utils.data.dataset import Dataset
 from torch.utils.data import DataLoader
 from torch.nn import MSELoss, CrossEntropyLoss
 import pytorch_lightning as pl
-from transformers import AutoTokenizer, BertForTokenClassification, AutoConfig, Trainer, TrainingArguments
+from transformers import AutoTokenizer, AutoModelForTokenClassification, AutoConfig, Trainer, TrainingArguments
 from pytorch_lightning.callbacks import EarlyStopping
 from sklearn.preprocessing import LabelEncoder
 from nervaluate import Evaluator
@@ -18,7 +18,7 @@ class TransformerModel(pl.LightningModule):
         print("Loading AutoModel [{}]...".format(model_name))
         self.model_name = model_name
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = BertForTokenClassification.from_pretrained(model_name, num_labels=num_labels)
+        self.model = AutoModelForTokenClassification.from_pretrained(model_name, num_labels=num_labels)
         self.dropout = nn.Dropout(0.2)
 
         self.label_encoder = label_encoder
