@@ -272,7 +272,6 @@ if __name__ == "__main__":
     )
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
-    print(tokenizer.do_lower_case)
 
     label_encoder = load_label_encoder(os.path.join(args.data_path, "train.conllu"))
 
