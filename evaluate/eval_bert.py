@@ -105,7 +105,7 @@ class TransformerModel(pl.LightningModule):
         self.log("valid/ent_type", results["ent_type"]["f1"])
         self.log("valid/partial", results["partial"]["f1"])
         self.log("valid/strict", results["strict"]["f1"])
-        self.log("valid/exact", results["exact"]["f1"])
+        self.log("valid/exact", results["exact"]["f1"], prog_bar=True)
 
         self.valid_y_hat = []
         self.valid_y = []
