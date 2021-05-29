@@ -76,7 +76,7 @@ class TransformerModel(pl.LightningModule):
         self.log("train/ent_type", results["ent_type"]["f1"])
         self.log("train/partial", results["partial"]["f1"])
         self.log("train/strict", results["strict"]["f1"])
-        self.log("train/exact", results["exact"]["f1"])
+        self.log("train/exact", results["exact"]["f1"], prog_bar=True)
 
         self.train_y_hat = []
         self.train_y = []
