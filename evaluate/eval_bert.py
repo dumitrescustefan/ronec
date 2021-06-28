@@ -209,11 +209,12 @@ def load_label_encoder(file_path):
 
 
 class MyCollator(object):
-    def __init__(self, tokenizer, label_encoder, pad_label):
+    def __init__(self, tokenizer, label_encoder, pad_label, model_max_length):
         self.tokenizer = tokenizer
         self.label_encoder = label_encoder
         self.pad_label = pad_label
         self.pad_label_id = self.label_encoder.transform([self.pad_label])[0]
+        self.model_max_length = model_max_length
 
     def __call__(self, batch):
         batch_inputs_ids = []
@@ -280,7 +281,7 @@ if __name__ == "__main__":
     val_dataset = MyDataset(os.path.join(args.data_path, "dev.conllu"))
     test_dataset = MyDataset(os.path.join(args.data_path, "test.conllu"))
 
-    my_collator = MyCollator(tokenizer=tokenizer, label_encoder=label_encoder, pad_label=args.pad_label)
+    my_collator = MyCollator(tokenizer=tokenizer, label_encoder=label_encoder, pad_label=args.pad_label, model_max_length=args.model_max_length)
 
     train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, num_workers=4, shuffle=True,
                                   collate_fn=my_collator, pin_memory=True)
