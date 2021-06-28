@@ -2,6 +2,14 @@
 
 Version 1.0 of this free corpus holds **5127** sentences, annotated with **16** classes, with a total of **26376** annotated entities. The corpus comes into two formats: BRAT and CONLLUP, stored in the `roner/` folder. The CONLLUP file is annotated with lemma, POSes and dependency parsing information with [NLP-Cube](https://github.com/adobe/NLP-Cube). For more details regarding the corpus please see its dedicated [info file](ronec/README.md).
 
+
+## News: 
+
+* Upcoming v2 of the corpus, ETA: August-September 2021. 
+* New evaluation script is available in ``evaluate\``, using HuggingFace's transformers lib. One-line eval of MLM model on RONEC. 
+
+
+
 ### CONLLUP version: [What is CONLLUP?](http://universaldependencies.org/ext-format.html)
 **Direct download of the text file in PARSEME:MWE format (~14.3MB): [PARSEME:MWE Download](https://github.com/dumitrescustefan/ronec/raw/master/ronec/conllup/zips/ronec.zip)**
 
