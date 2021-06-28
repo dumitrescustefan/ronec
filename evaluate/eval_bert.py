@@ -234,9 +234,9 @@ class MyCollator(object):
                 list_labels += sublabels
                 list_token_idx += [list_token_idx[-1] + len(subtokens)]
 
-            batch_inputs_ids.append(torch.tensor([self.tokenizer.cls_token_id] + list_tokens[:510] + [self.tokenizer.sep_token_id]))
+            batch_inputs_ids.append(torch.tensor([self.tokenizer.cls_token_id] + list_tokens[:self.model_max_length - 2] + [self.tokenizer.sep_token_id]))
             batch_attention.append(torch.tensor([1] * (len(list_tokens) + 2)))
-            batch_labels.append(torch.tensor([self.pad_label_id] + list_labels[:510] + [self.pad_label_id]))
+            batch_labels.append(torch.tensor([self.pad_label_id] + list_labels[:self.model_max_length - 2] + [self.pad_label_id]))
             batch_token_idx.append(list_token_idx[:-1])
 
             assert len(batch_inputs_ids[-1]) == len(batch_attention[-1]) == len(batch_labels[-1])
