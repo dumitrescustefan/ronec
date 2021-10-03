@@ -1,16 +1,17 @@
 ## Evaluation script 
 
-Use the ``eval_ronec.py`` script to evaluate RONEC performance of a transformer model using HuggingFace's awesome lib. 
+Use the ``eval_ronec_v2.py`` script to evaluate the performance of a Romanian transformer token classification accuracy (NER task) on RONEC v2. 
 
-The following results were obtained using the command ``python eval_bert.py --batch_size=16 --accumulate_grad_batches=4``:
+The following results were obtained using the command ``python eval_ronec_v2.py --batch_size=8 --accumulate_grad_batches=4 --experiment_itterations 5``:
 
+```json
+coming soon!
 ```
-{'valid_loss': 0.35410113722989056, 'valid_ent_type': 0.8919540229885057, 'valid_partial': 0.8862953138815208, 'valid_strict': 0.8247568523430592, 'valid_exact': 0.8463306808134393, 'test_loss': 0.3475743992762132, 'test_ent_type': 0.8885135135135135, 'test_partial': 0.8977102102102102, 'test_strict': 0.8303303303303303, 'test_exact': 0.8633633633633634}
-```
 
-Default params use a batch_size of 32 and no accumulation, but that requires 16GB of GPU RAM. The results above were obtained  running on a 11GB GPU. The default transformer model is ``dumitrescustefan/bert-base-romanian-cased-v1``.
+Default params use a batch_size of 8 and no accumulation. The results above were obtained running on an 11GB 2080Ti GPU. The default transformer model is ``dumitrescustefan/bert-base-romanian-cased-v1``. PyTorch version was 1.9.1, pytorch_lightning at 1.4.9.
 
-Use ``python eval_bert.py --help`` for the full available parameters. 
+To run the script yourself, clone the repo, change the current working dir to ``evaluate``, install requirements with ``pip install -f requirements.txt`` (preferably in a virtual env) and run the command given above.
+Use ``python eval_ronec_v2.py --help`` for the full available parameters.  
 
 
 
