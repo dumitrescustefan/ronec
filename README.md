@@ -1,4 +1,7 @@
-![Version%202.0](https://img.shields.io/badge/version-2.0-red)
+![RONEC%20v2.0](https://img.shields.io/badge/🇷🇴%20RONEC%20v2.0-eaeaea)
+![15%20classes](https://img.shields.io/badge/classes-15-orange)
+![15%20classes](https://img.shields.io/badge/tokens-0.5M-orange)
+![15%20classes](https://img.shields.io/badge/annotated%20entities-80K-orange)
 
 # RONEC - the Romanian Named Entity Corpus - v2.0 
 
