@@ -11,13 +11,16 @@ import numpy as np
 
 
 class TransformerModel(pl.LightningModule):
-    def __init__(self, model_name="dumitrescustefan/bert-base-romanian-cased-v1", lr=2e-05, model_max_length=512,
-                 bio2tag_list=[], tag_list=[]):
+    def __init__(self, model_name="dumitrescustefan/bert-base-romanian-cased-v1", tokenizer_name=None, lr=2e-05,
+                 model_max_length=512, bio2tag_list=[], tag_list=[]):
         super().__init__()
+
+        if tokenizer_name is None or tokenizer_name == "":
+            tokenizer_name = model_name
 
         print("Loading AutoModel [{}] ...".format(model_name))
         self.model_name = model_name
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.model = AutoModelForTokenClassification.from_pretrained(model_name, num_labels=len(bio2tag_list))
         self.dropout = nn.Dropout(0.2)
 
@@ -34,6 +37,14 @@ class TransformerModel(pl.LightningModule):
         self.test_y_hat = []
         self.test_y = []
         self.test_loss = []
+
+        # check cls, sep and pad tokens
+        if self.tokenizer.cls_token_id is None:
+            print(f"*** Warning, tokenizer {tokenizer_name} has no defined CLS token: sequences will not be marked with special chars! ***")
+        if self.tokenizer.sep_token_id is None:
+            print(f"*** Warning, tokenizer {tokenizer_name} has no defined SEP token: sequences will not be marked with special chars! ***")
+        if self.tokenizer.pad_token_id is None:
+            print(f"*** Warning, tokenizer {tokenizer_name} has no defined PAD token: sequences will be padded with 0 by default! ***")
 
 
     def forward(self, input_ids, attention_mask, labels):
@@ -157,9 +168,24 @@ class TransformerModel(pl.LightningModule):
         self.test_y = []
         self.test_loss = []
 
-
     def configure_optimizers(self):
         return torch.optim.AdamW([p for p in self.parameters() if p.requires_grad], lr=self.lr, eps=1e-08)
+
+    def predict(self, input_string):
+        input_ids = self.tokenizer.encode(input_string, add_special_tokens=False)
+        attention_mask = [1] * len(input_ids)
+
+        # convert to tensors
+
+        # run the model
+        output = self.model(input_ids=torch.LongTensor(input_ids), return_dict=True)
+        logits = output["logits"]
+
+        # extract results
+        indices = torch.argmax(logits.detach().cpu(), dim=-1).squeeze(dim=0).tolist()  # reduce to [batch_size, seq_len] as list
+
+        for id, ind in zip(input_ids, indices):
+            print(f"\t[{self.tokenizer.decode(id)}] -> {ind}")
 
 
 class MyDataset(Dataset):
@@ -227,23 +253,28 @@ class MyCollator(object):
                 instance_token_idx = instance_token_idx[:self.max_seq_len - 2]
 
             # prepend and append special tokens, if needed
-            instance_ids = [self.tokenizer.cls_token_id] + instance_ids + [self.tokenizer.sep_token_id]
-            instance_labels = [0] + instance_labels + [0]
+            #print()
+            #print(instance_ids)
+            if self.tokenizer.cls_token_id and self.tokenizer.sep_token_id:
+                instance_ids = [self.tokenizer.cls_token_id] + instance_ids + [self.tokenizer.sep_token_id]
+                instance_labels = [0] + instance_labels + [0]
+                instance_token_idx = [-1] + instance_token_idx  # no need to pad the last, will do so automatically at return
+            #print(instance_ids)
             instance_attention = [1] * len(instance_ids)
-            instance_token_idx = [-1] + instance_token_idx  # no need to pad the last, will do so automatically at return
+
 
             # update max_len for later padding
             max_len = max(max_len, len(instance_ids))
 
             # add to batch
-            batch_input_ids.append(torch.tensor(instance_ids))
-            batch_labels.append(torch.tensor(instance_labels))
-            batch_attention.append(torch.tensor(instance_attention))
-            batch_token_idx.append(torch.tensor(instance_token_idx))
+            batch_input_ids.append(torch.LongTensor(instance_ids))
+            batch_labels.append(torch.LongTensor(instance_labels))
+            batch_attention.append(torch.LongTensor(instance_attention))
+            batch_token_idx.append(torch.LongTensor(instance_token_idx))
 
         return {
             "input_ids": torch.nn.utils.rnn.pad_sequence(batch_input_ids, batch_first=True,
-                                                         padding_value=self.tokenizer.pad_token_id),
+                                                         padding_value=self.tokenizer.pad_token_id if self.tokenizer.pad_token_id else 0),
             "attention_mask": torch.nn.utils.rnn.pad_sequence(batch_attention, batch_first=True, padding_value=0),
             "labels": torch.nn.utils.rnn.pad_sequence(batch_labels, batch_first=True, padding_value=0),
             "token_idx": torch.nn.utils.rnn.pad_sequence(batch_token_idx, batch_first=True, padding_value=-1)
@@ -421,6 +452,7 @@ def run_evaluation(
     print("\nFinal averaged results on TEST data: ")
     print(result)
 
+
 if __name__ == "__main__":
     from argparse import ArgumentParser
 
@@ -459,5 +491,3 @@ if __name__ == "__main__":
         experiment_iterations=args.experiment_iterations,
         results_file=args.results_file
     )
-#racai/distilbert-base-romanian-cased
-#readerbench/RoGPT2-large
