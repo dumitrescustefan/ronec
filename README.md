@@ -1,4 +1,6 @@
-# RONEC - the Romanian Named Entity Corpus - version 2.0 
+![Version%202.0](https://img.shields.io/badge/version-2.0-red)
+
+# RONEC - the Romanian Named Entity Corpus - v2.0 
 
 RONEC, at version 2.0, holds **12330** sentences with over **0.5M** tokens, annotated with **15** classes, to a total of **80.283** distinctly annotated entities. 
 
