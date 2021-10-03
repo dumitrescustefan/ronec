@@ -1,0 +1,5 @@
+torch
+transformers
+scikit-learn
+nervaluate
+pytorch-lightning

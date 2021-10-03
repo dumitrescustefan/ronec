@@ -1,5 +1,7 @@
 lightning_logs/
+wandb/
 *.json
+corpus_splitter.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,5 +1,4 @@
 torch
 transformers
-scikit-learn
 nervaluate
-pytorch-lightning
+pytorch_lightning
