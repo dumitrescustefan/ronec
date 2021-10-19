@@ -9,7 +9,6 @@ from pytorch_lightning.callbacks import EarlyStopping
 from nervaluate import Evaluator
 import numpy as np
 
-
 class TransformerModel(pl.LightningModule):
     def __init__(self, model_name="dumitrescustefan/bert-base-romanian-cased-v1", tokenizer_name=None, lr=2e-05,
                  model_max_length=512, bio2tag_list=[], tag_list=[]):
@@ -20,7 +19,7 @@ class TransformerModel(pl.LightningModule):
 
         print("Loading AutoModel [{}] ...".format(model_name))
         self.model_name = model_name
-        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name, strip_accents=False)
         self.model = AutoModelForTokenClassification.from_pretrained(model_name, num_labels=len(bio2tag_list))
         self.dropout = nn.Dropout(0.2)
 
@@ -65,7 +64,6 @@ class TransformerModel(pl.LightningModule):
         self.train_loss.append(loss.detach().cpu().numpy())
 
         return {"loss": loss}
-
 
     def validation_step(self, batch, batch_idx):
         input_ids = batch["input_ids"]
@@ -159,10 +157,10 @@ class TransformerModel(pl.LightningModule):
         import pprint
         print("_" * 120)
         print("\n\n Test results: \n")
-        pprint.pprint(results["exact"])
-        print("\n Per class Exact-F1 values:")
+        pprint.pprint(results["strict"])
+        print("\n Per class Strict-F1 values:")
         for cls in self.tag_list:
-            print(f'\t {cls} : \t{results_by_tag[cls]["exact"]["f1"]:.3f}')
+            print(f'\t {cls} : \t{results_by_tag[cls]["strict"]["f1"]:.3f}')
 
         self.test_y_hat = []
         self.test_y = []
@@ -347,7 +345,7 @@ def run_evaluation(
     print(f"\nThere are {len(tags)} classes: {tags}")
 
     # init tokenizer and start loading data
-    tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_name, strip_accents=False)
 
     print("Loading data...")
     train_dataset = MyDataset(train_data)
@@ -392,7 +390,7 @@ def run_evaluation(
         )
 
         early_stop = EarlyStopping(
-            monitor='valid/exact',
+            monitor='valid/strict',
             min_delta=0.001,
             patience=5,
             verbose=True,
