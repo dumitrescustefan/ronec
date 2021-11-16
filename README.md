@@ -15,7 +15,7 @@ It is more than twice the size of the previous version. Quality has been signifi
 from datasets import load_dataset
 ronec = load_dataset("ronec")
 ```
-the ``ronec`` dict contains the 'train', 'validation' and 'test' splits. Access elements like ``ronec["train"][1000]`` - please see the simple format below. 
+the ``ronec`` dict contains the 'train', 'validation' and 'test' splits. Access elements like ``ronec["train"][1000]`` - please see the simple format below. You can also explore the dataset [here](https://huggingface.co/datasets/ronec).
 
 ## Corpus details
 
