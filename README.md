@@ -7,7 +7,15 @@
 
 RONEC, at version 2.0, holds **12330** sentences with over **0.5M** tokens, annotated with **15** classes, to a total of **80.283** distinctly annotated entities. 
 
-It is more than twice the size of the previous version. It contains all data from v1 and everything has been annotated from scratch to confrom to a single standard. For version 1, please see the ``ronec_v1`` folder. 
+It is more than twice the size of the previous version. Quality has been significantly increased as verything has been annotated from scratch to confrom to a single standard. For the older version 1, please see the ``ronec_v1`` folder. 
+
+
+ **_Update - 16 Nov 2021_** : RONEC v2 is available on HuggingFace's [datasets](https://github.com/huggingface/datasets) library. To use, simply ``pip install datasets`` and run the following:
+```python
+from datasets import load_dataset
+ronec = load_dataset("ronec")
+```
+the ``ronec`` dict contains the 'train', 'validation' and 'test' splits. Access elements like ``ronec["train"][1000]`` - please see the simple format below. 
 
 ## Corpus details
 
