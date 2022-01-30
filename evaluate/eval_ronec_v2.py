@@ -20,7 +20,7 @@ class TransformerModel(pl.LightningModule):
         print("Loading AutoModel [{}] ...".format(model_name))
         self.model_name = model_name
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name, strip_accents=False)
-        self.model = AutoModelForTokenClassification.from_pretrained(model_name, num_labels=len(bio2tag_list))
+        self.model = AutoModelForTokenClassification.from_pretrained(model_name, num_labels=len(bio2tag_list), from_flax=False)
         self.dropout = nn.Dropout(0.2)
 
         self.lr = lr
@@ -42,9 +42,11 @@ class TransformerModel(pl.LightningModule):
             print(f"*** Warning, tokenizer {tokenizer_name} has no defined CLS token: sequences will not be marked with special chars! ***")
         if self.tokenizer.sep_token_id is None:
             print(f"*** Warning, tokenizer {tokenizer_name} has no defined SEP token: sequences will not be marked with special chars! ***")
-        if self.tokenizer.pad_token_id is None:
-            print(f"*** Warning, tokenizer {tokenizer_name} has no defined PAD token: sequences will be padded with 0 by default! ***")
-
+       
+        # add pad token
+        if self.tokenizer.pad_token is None:
+            print(f"\tNo PAD token detected, automatically assigning the SEP token as PAD.")
+            self.tokenizer.pad_token = self.tokenizer.sep_token
 
     def forward(self, input_ids, attention_mask, labels):
         output = self.model(
