@@ -156,7 +156,7 @@ class TransformerModel(pl.LightningModule):
         self.log("test/exact", results["exact"]["f1"])
 
     def configure_optimizers(self):
-        return torch.optim.AdamW([p for p in self.parameters() if p.requires_grad], lr=self.lr, eps=1e-08)
+        optimizer = torch.optim.AdamW([p for p in self.parameters() if p.requires_grad], lr=self.lr, eps=1e-08)
         return {
             'optimizer': optimizer,
             'lr_scheduler': {
@@ -458,7 +458,7 @@ if __name__ == "__main__":
     parser.add_argument('--lr_factor', type=float, default=2/3)
     parser.add_argument('--lr_patience', type=float, default=5)
     parser.add_argument('--model_max_length', type=int, default=512)
-    parser.add_argument('--experiment_iterations', type=int, default=2)
+    parser.add_argument('--experiment_iterations', type=int, default=1)
 
     args = parser.parse_args()
 
