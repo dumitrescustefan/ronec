@@ -389,12 +389,12 @@ def run_evaluation(args):
         trainer = pl.Trainer(
             accelerator='gpu',
             devices=1,
-            max_epochs=3,#args.max_epochs,
+            max_epochs=args.max_epochs,
             callbacks=[lr_monitor, early_stop],
             accumulate_grad_batches=args.accumulate_grad_batches,
             gradient_clip_val=1.0,
-            limit_train_batches=50,
-            limit_val_batches=50,
+            #limit_train_batches=50,
+            #limit_val_batches=50,
         )
         trainer.fit(model, train_dataloader, val_dataloader)
 
@@ -458,7 +458,7 @@ if __name__ == "__main__":
     parser.add_argument('--lr_factor', type=float, default=2/3)
     parser.add_argument('--lr_patience', type=float, default=5)
     parser.add_argument('--model_max_length', type=int, default=512)
-    parser.add_argument('--experiment_iterations', type=int, default=3)
+    parser.add_argument('--experiment_iterations', type=int, default=1)
 
     args = parser.parse_args()
 
